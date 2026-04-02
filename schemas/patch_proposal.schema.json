@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "novelwriter/patch_proposal",
+  "title": "PatchProposal",
+  "description": "Minimal Patch Generator가 생성하는 수정안",
+  "type": "object",
+  "required": ["patch_id", "issue_id", "unit_id", "patch_size", "before_text", "after_text"],
+  "properties": {
+    "patch_id": {
+      "type": "string",
+      "pattern": "^PG-[0-9]{3}-[a-z]$",
+      "description": "패치 ID (PG-이슈번호-버전문자). 예: PG-001-a"
+    },
+    "issue_id": {
+      "type": "string",
+      "description": "해결하려는 이슈 ID"
+    },
+    "unit_id": {
+      "type": "string",
+      "description": "수정 대상 story_unit ID"
+    },
+    "patch_size": {
+      "type": "string",
+      "enum": ["note", "line_edit", "scene_patch", "chapter_patch", "arc_rewrite"]
+    },
+    "cost_estimate": {
+      "type": "string",
+      "enum": ["trivial", "low", "medium", "high", "very_high"]
+    },
+    "before_text": {
+      "type": "string",
+      "description": "수정 전 원문 (정확한 인용)"
+    },
+    "after_text": {
+      "type": "string",
+      "description": "수정 후 텍스트 (제안)"
+    },
+    "change_summary": {
+      "type": "string",
+      "description": "변경 내용 한 줄 요약"
+    },
+    "voice_preservation_check": {
+      "type": "object",
+      "description": "작가 문체 보존 체크",
+      "properties": {
+        "pov_maintained": { "type": "boolean" },
+        "character_voice_maintained": { "type": "boolean" },
+        "rhyme_style_maintained": { "type": "boolean" },
+        "new_canon_introduced": {
+          "type": "boolean",
+          "description": "새 설정이 도입되었는가 (true이면 승인 필요)"
+        },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "risk_note": {
+      "type": "string",
+      "description": "이 패치 적용 시 발생 가능한 부작용"
+    },
+    "regression_required": {
+      "type": "boolean",
+      "default": true,
+      "description": "패치 후 회귀 검사 필요 여부"
+    },
+    "requires_human_approval": {
+      "type": "boolean",
+      "default": false,
+      "description": "arc_rewrite이거나 새 캐논 도입 시 true"
+    },
+    "alternative_patches": {
+      "type": "array",
+      "description": "대안 수정안 (최대 2개)",
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["patch_id", "after_text", "change_summary"],
+        "properties": {
+          "patch_id": { "type": "string" },
+          "after_text": { "type": "string" },
+          "change_summary": { "type": "string" },
+          "patch_size": {
+            "type": "string",
+            "enum": ["note", "line_edit", "scene_patch", "chapter_patch", "arc_rewrite"]
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "approved", "applied", "rejected"],
+      "default": "proposed"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

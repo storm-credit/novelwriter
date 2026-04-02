@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "novelwriter/story_unit",
+  "title": "StoryUnit",
+  "description": "너라는 운율의 서사 단위 (volume/phase/chapter/episode/scene)",
+  "type": "object",
+  "required": ["unit_id", "type", "title", "status"],
+  "properties": {
+    "unit_id": {
+      "type": "string",
+      "pattern": "^(phase|ch|ep|sc)_[0-9]{2,3}(_[0-9]{2})?$",
+      "examples": ["ep_001", "ep_040", "ch_08", "phase_02", "sc_001_03"],
+      "description": "고유 식별자. 예: ep_001 = 1화, sc_001_03 = 1화 3번씩"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["phase", "chapter", "episode", "scene"]
+    },
+    "parent_id": {
+      "type": ["string", "null"],
+      "description": "상위 단위 ID (phase > chapter > episode > scene)"
+    },
+    "title": {
+      "type": "string",
+      "description": "화 제목 또는 씬 내부 제목"
+    },
+    "episode_number": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "maximum": 120
+    },
+    "chapter_number": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "maximum": 24
+    },
+    "phase_number": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "maximum": 5
+    },
+    "pov_character": {
+      "type": "string",
+      "enum": ["윤서준", "지아린", "최이든", "강도현", "배소나", "이태율", "정시온", "송유빈", "김은지", "문다율", "omniscient"],
+      "description": "시점 인물"
+    },
+    "timeline": {
+      "type": "object",
+      "properties": {
+        "absolute_reference": {
+          "type": ["string", "null"],
+          "description": "명시적 날짜/시간 (예: '3월 첫째 주 월요일 오전 8:50')"
+        },
+        "relative_reference": {
+          "type": ["string", "null"],
+          "description": "상대적 시간 (예: '전화 사건 다음날', '6개월 후')"
+        },
+        "season": {
+          "type": ["string", "null"],
+          "enum": ["봄", "여름", "가을", "겨울", null]
+        },
+        "time_of_day": {
+          "type": ["string", "null"],
+          "enum": ["새벽", "아침", "오전", "점심", "오후", "저녁", "밤", "자정", null]
+        }
+      }
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": ["string", "null"],
+          "description": "주요 장소 (예: '명성대 중앙광장', '학생 식당')"
+        },
+        "secondary": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "characters_present": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "해당 단위에 등장하는 캐릭터 목록"
+    },
+    "arc_stage": {
+      "type": "object",
+      "description": "주요 캐릭터의 Arc 단계",
+      "properties": {
+        "서준": {
+          "type": ["string", "null"],
+          "enum": ["단절", "파동", "균열", "상실", "완전한 울림", null]
+        },
+        "아린": {
+          "type": ["string", "null"],
+          "enum": ["호기심", "끌림", "사랑", "의심", "포기", "정리", null]
+        }
+      }
+    },
+    "rhyme_system_events": {
+      "type": "array",
+      "description": "운율 시스템 관련 주요 이벤트",
+      "items": {
+        "type": "object",
+        "required": ["type", "description"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "rhyme_heard",
+              "rhyme_blocked",
+              "rhyme_fade_stage",
+              "rhyme_lost",
+              "silence_break",
+              "dissonance",
+              "perfect_harmony"
+            ]
+          },
+          "subject": { "type": "string", "description": "운율을 듣는 주체" },
+          "object": { "type": "string", "description": "운율의 발신자" },
+          "melody_description": { "type": "string", "description": "음악적 묘사" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "milestone": {
+      "type": ["string", "null"],
+      "description": "마일스톤 해당 시 명시 (예: '분수쇼 고백 성공')",
+      "enum": [
+        "16세 트라우마 회상",
+        "분수쇼 고백 성공",
+        "첫 키스",
+        "이별 결심",
+        "마지막 포옹 / 능력 완전 상실",
+        "솔직한 대화 시도",
+        "제주도 성숙한 이별",
+        "정시온의 조언",
+        "은지 등장",
+        "축제 재회",
+        "각자의 길 열린 엔딩",
+        null
+      ]
+    },
+    "word_count": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "글자수"
+    },
+    "summary": {
+      "type": ["string", "null"],
+      "maxLength": 500,
+      "description": "해당 단위의 핵심 요약 (500자 이하)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "written", "audited", "patched", "approved", "published"],
+      "description": "현재 상태"
+    },
+    "audit_version": {
+      "type": ["string", "null"],
+      "description": "마지막 감사 버전 해시"
+    },
+    "file_path": {
+      "type": ["string", "null"],
+      "description": "원고 파일 경로 (예: novel/01화.md)"
+    }
+  }
+}

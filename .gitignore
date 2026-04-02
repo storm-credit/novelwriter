@@ -1,0 +1,8 @@
+﻿__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+Thumbs.db
+*.backup
+analyze_layout.js
+expand_office.js

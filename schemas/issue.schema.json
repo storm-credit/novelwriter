@@ -1,0 +1,157 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "novelwriter/issue",
+  "title": "IssueReport",
+  "description": "에이전트가 탐지한 단일 이슈 리포트",
+  "type": "object",
+  "required": ["issue_id", "agent", "domain", "verdict", "confidence", "severity", "title", "evidence"],
+  "properties": {
+    "issue_id": {
+      "type": "string",
+      "pattern": "^[A-Z]{2,4}-[0-9]{3}$",
+      "examples": ["CA-001", "TL-023", "PC-007", "MC-014", "VA-005", "SP-011", "PA-002", "PG-009"],
+      "description": "도메인 접두사 + 3자리 순번. CA=Canon, TL=Timeline, PC=PlotCausality, MC=Motivation, VA=Voice, SP=ScenePurpose, PA=Pacing, PG=Patch"
+    },
+    "agent": {
+      "type": "string",
+      "enum": [
+        "Canon Auditor",
+        "Timeline Auditor",
+        "Plot Causality Inspector",
+        "Motivation Checker",
+        "Voice Auditor",
+        "Scene Purpose Auditor",
+        "Pacing Auditor",
+        "Minimal Patch Generator"
+      ]
+    },
+    "domain": {
+      "type": "string",
+      "enum": ["canon", "timeline", "plot_causality", "motivation", "voice", "scene_purpose", "pacing"]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["pass", "soft_fail", "fail"],
+      "description": "pass=이슈 없음, soft_fail=경고, fail=블록"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "탐지 확신도 (0.0~1.0). 0.7 미만은 soft_fail만 가능"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "info"],
+      "description": "critical=즉시 블록, high=리뷰 필수, medium=패치 권장, low=메모, info=참고"
+    },
+    "is_hard_gate_violation": {
+      "type": "boolean",
+      "default": false,
+      "description": "하드 게이트 위반 여부 (true이면 즉시 블록)"
+    },
+    "hard_gate_type": {
+      "type": ["string", "null"],
+      "enum": [
+        "canon_gate",
+        "timeline_gate",
+        "motivation_gate",
+        "knowledge_gate",
+        "payoff_gate",
+        "pov_gate",
+        null
+      ]
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "이슈 제목 (한국어 권장)"
+    },
+    "description": {
+      "type": "string",
+      "description": "이슈 상세 설명"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "description": "이슈 근거 (최소 1개 필수, 증거 없으면 리포트 무효)",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "source_type", "quote"],
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "description": "출처 ID (예: ep_001, lore_rhyme_system, char_seojun)"
+          },
+          "source_type": {
+            "type": "string",
+            "enum": ["manuscript", "lore", "character_sheet", "story_outline", "timeline_db"]
+          },
+          "quote": {
+            "type": "string",
+            "maxLength": 300,
+            "description": "원문 인용 (최대 300자)"
+          },
+          "location_hint": {
+            "type": ["string", "null"],
+            "description": "위치 힌트 (예: '1화 3번째 씬', 'Phase-2 요약 7항')"
+          }
+        }
+      }
+    },
+    "inference_note": {
+      "type": ["string", "null"],
+      "description": "사실이 아닌 추론인 경우 반드시 명시"
+    },
+    "why_it_matters": {
+      "type": "string",
+      "description": "이 이슈가 서사에 미치는 영향 설명"
+    },
+    "rhyme_system_related": {
+      "type": "boolean",
+      "default": false,
+      "description": "운율 시스템과 직접 관련된 이슈 여부"
+    },
+    "affected_unit_id": {
+      "type": "string",
+      "description": "이슈가 발생한 story_unit ID"
+    },
+    "fix_options": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["size", "cost", "proposal"],
+        "properties": {
+          "size": {
+            "type": "string",
+            "enum": ["note", "line_edit", "scene_patch", "chapter_patch", "arc_rewrite"]
+          },
+          "cost": {
+            "type": "string",
+            "enum": ["trivial", "low", "medium", "high", "very_high"]
+          },
+          "proposal": {
+            "type": "string",
+            "description": "구체적 수정 제안"
+          },
+          "requires_human_approval": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "in_review", "patched", "wontfix", "resolved"],
+      "default": "open"
+    },
+    "detected_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolved_in_version": {
+      "type": ["string", "null"]
+    }
+  }
+}

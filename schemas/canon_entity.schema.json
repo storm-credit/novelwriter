@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "novelwriter/canon_entity",
+  "title": "CanonEntity",
+  "description": "설정집 내 모든 정식 캐논 개체 (캐릭터/장소/사건/규칙/사물)",
+  "type": "object",
+  "required": ["entity_id", "entity_type", "canonical_name", "first_appearance"],
+  "properties": {
+    "entity_id": {
+      "type": "string",
+      "pattern": "^(char|loc|rule|item|event|faction)_[a-z0-9_]+$",
+      "examples": ["char_윤서준", "rule_rhyme_range", "loc_명성대", "item_이어폰", "event_16세_불협화음"]
+    },
+    "entity_type": {
+      "type": "string",
+      "enum": ["character", "location", "rule", "item", "event", "faction", "concept"]
+    },
+    "canonical_name": {
+      "type": "string",
+      "description": "정식 표기명"
+    },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "별칭·대체 표기 목록"
+    },
+    "description": {
+      "type": "string"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "개체 유형별 속성 (자유 형식)",
+      "additionalProperties": true
+    },
+    "hard_constraints": {
+      "type": "array",
+      "description": "절대 위반 불가 제약 (Canon Hard Gate)",
+      "items": {
+        "type": "object",
+        "required": ["constraint_id", "description"],
+        "properties": {
+          "constraint_id": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "source_ref": {
+            "type": "string",
+            "description": "근거 설정집 파일 경로"
+          }
+        }
+      }
+    },
+    "soft_constraints": {
+      "type": "array",
+      "description": "강력 권장 제약 (위반 시 soft_fail)",
+      "items": {
+        "type": "object",
+        "required": ["constraint_id", "description"],
+        "properties": {
+          "constraint_id": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "first_appearance": {
+      "type": "string",
+      "description": "첫 등장 화 또는 설정집 파일 (예: 'ep_001', 'lore/캐릭터/윤서준.md')"
+    },
+    "lore_source": {
+      "type": ["string", "null"],
+      "description": "원본 설정집 파일 경로"
+    },
+    "last_verified_episode": {
+      "type": ["integer", "null"],
+      "description": "마지막으로 원고에서 확인된 화 번호"
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  },
+  "examples": [
+    {
+      "entity_id": "rule_rhyme_selfhearing",
+      "entity_type": "rule",
+      "canonical_name": "자기 운율 불가 법칙",
+      "aliases": ["절대 법칙", "자기 청취 불가"],
+      "description": "윤서준은 자신의 운율을 들을 수 없다. 오직 무음의 진동이나 심장 박동으로만 느껴진다.",
+      "hard_constraints": [
+        {
+          "constraint_id": "HC-RHYME-001",
+          "description": "서준이 자신의 운율을 '들었다'는 묘사는 어떤 형태로도 허용 불가",
+          "source_ref": "lore/02-세계관/운율 시스템.md#1. 공명의 원리"
+        }
+      ],
+      "soft_constraints": [],
+      "first_appearance": "lore/02-세계관/운율 시스템.md",
+      "lore_source": "lore/02-세계관/운율 시스템.md"
+    },
+    {
+      "entity_id": "rule_rhyme_range",
+      "entity_type": "rule",
+      "canonical_name": "운율 감지 범위",
+      "aliases": ["파장 범위", "3-5m 룰"],
+      "description": "운율은 반경 3-5미터 이내에서만 감지된다. 이 거리를 벗어나면 안전한 무음으로 돌아간다.",
+      "hard_constraints": [
+        {
+          "constraint_id": "HC-RHYME-002",
+          "description": "3-5m 반경 초과 상태에서 선명한 운율 감지 불가",
+          "source_ref": "lore/02-세계관/운율 시스템.md#2. 파장이 닿는 조건"
+        }
+      ],
+      "soft_constraints": [],
+      "first_appearance": "lore/02-세계관/운율 시스템.md",
+      "lore_source": "lore/02-세계관/운율 시스템.md"
+    },
+    {
+      "entity_id": "rule_rhyme_remote",
+      "entity_type": "rule",
+      "canonical_name": "원거리 운율 불가 법칙",
+      "aliases": ["전화 운율 불가", "영상통화 운율 불가"],
+      "description": "전화, 영상, 녹음된 목소리에는 운율이 실리지 않는다. 오직 눈앞에 존재하는 생명의 멜로디만 들린다.",
+      "hard_constraints": [
+        {
+          "constraint_id": "HC-RHYME-003",
+          "description": "전화·영상·녹음 매체를 통한 운율 감지는 어떤 형태로도 허용 불가",
+          "source_ref": "lore/02-세계관/운율 시스템.md#6. 능력의 한계"
+        }
+      ],
+      "soft_constraints": [],
+      "first_appearance": "lore/02-세계관/운율 시스템.md",
+      "lore_source": "lore/02-세계관/운율 시스템.md"
+    },
+    {
+      "entity_id": "rule_rhyme_fading",
+      "entity_type": "rule",
+      "canonical_name": "운율 소실 5단계",
+      "aliases": ["운율 소실 궤적", "Fading"],
+      "description": "운율은 5단계 순서로 소멸한다: 1.일시적 단절 → 2.아린 운율 소실 → 3.주변인 소음 소멸 → 4.기억의 환청 → 5.완벽한 고요",
+      "hard_constraints": [
+        {
+          "constraint_id": "HC-RHYME-004",
+          "description": "운율 소실은 반드시 1→2→3→4→5 순서로 진행. 역순 불가",
+          "source_ref": "lore/02-세계관/운율 시스템.md#7. 운율 소실의 궤적"
+        },
+        {
+          "constraint_id": "HC-RHYME-005",
+          "description": "2단계(아린 운율 소실)가 반드시 주변인 소멸보다 먼저 발생",
+          "source_ref": "lore/02-세계관/운율 시스템.md#7. 운율 소실의 궤적"
+        }
+      ],
+      "soft_constraints": [],
+      "first_appearance": "lore/02-세계관/운율 시스템.md",
+      "lore_source": "lore/02-세계관/운율 시스템.md"
+    },
+    {
+      "entity_id": "char_윤서준",
+      "entity_type": "character",
+      "canonical_name": "윤서준",
+      "aliases": ["서준", "Yoon Seojun"],
+      "description": "22세, 경영학과 2학년, 공감각 능력자 (타인의 감정이 음악으로 들림)",
+      "attributes": {
+        "age": 22,
+        "major": "경영학과",
+        "year": 2,
+        "height": "178cm",
+        "appearance": "선이 얇고 창백한 체형",
+        "signature_item": "빈 이어폰 (항상 착용)",
+        "ability": "타인의 진짜 감정을 음악으로 감지하는 공감각",
+        "arc_stages": ["단절", "파동", "균열", "상실", "완전한 울림"]
+      },
+      "hard_constraints": [
+        {
+          "constraint_id": "HC-CHAR-001",
+          "description": "자신의 운율은 절대 들을 수 없음",
+          "source_ref": "lore/03-캐릭터/윤서준.md"
+        }
+      ],
+      "first_appearance": "ep_001",
+      "lore_source": "lore/03-캐릭터/윤서준.md"
+    },
+    {
+      "entity_id": "char_지아린",
+      "entity_type": "character",
+      "canonical_name": "지아린",
+      "aliases": ["아린", "Ji Arin"],
+      "description": "20세, 국문학과 1학년(21학번), 밴드 동아리 보컬",
+      "attributes": {
+        "age": 20,
+        "major": "국문학과",
+        "year": 1,
+        "admission": "21학번",
+        "height": "165cm",
+        "appearance": "긴 생머리",
+        "club": "학교 밴드 동아리 보컬",
+        "rhyme_base": "말랑말랑한 피아노 선율 (도-미-솔 기본 코드)",
+        "rhyme_closed": "완전한 무음 (마음의 문을 닫을 때)",
+        "arc_stages": ["호기심", "끌림", "사랑", "의심", "포기", "정리"]
+      },
+      "hard_constraints": [
+        {
+          "constraint_id": "HC-CHAR-002",
+          "description": "아린의 '닫힘' 상태 운율은 불협화음이 아닌 완전한 무음",
+          "source_ref": "lore/03-캐릭터/지아린.md"
+        }
+      ],
+      "first_appearance": "ep_001",
+      "lore_source": "lore/03-캐릭터/지아린.md"
+    }
+  ]
+}

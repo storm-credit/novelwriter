@@ -1,0 +1,245 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "novelwriter/obsidian_note",
+  "title": "ObsidianNoteMetadata — Canon Standard v2",
+  "description": "너라는 운율 설정집 및 멀티프로젝트 확장을 위한 Obsidian frontmatter 표준 스키마 v2. 이 스키마를 준수한 노트만 공식 캐논으로 인정됩니다.",
+  "type": "object",
+  "required": ["id", "title", "entity_type", "project_id", "canon_status", "scope", "source_priority", "status"],
+
+  "properties": {
+
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "기계 판독용 고유 식별자. 소문자 + snake_case. 한번 부여 후 변경 불가. 재사용 금지.",
+      "examples": [
+        "char_윤서준", "char_지아린", "rule_rhyme_selfhearing",
+        "rule_rhyme_range", "loc_명성대", "event_16세_불협화음",
+        "faction_밴드동아리", "issue_cm_001"
+      ]
+    },
+
+    "title": {
+      "type": "string",
+      "description": "사람이 읽는 노트 제목 (파일명과 일치 권장)"
+    },
+
+    "entity_type": {
+      "type": "string",
+      "description": "개체 유형. 반드시 통제 어휘(docs/entity_type_vocabulary.md)에서 선택.",
+      "enum": [
+        "series", "chronicle", "volume", "arc", "chapter", "scene",
+        "subplot", "theme", "foreshadowing_seed", "payoff_node",
+        "character", "character_group", "bloodline", "title_role", "identity_mask",
+        "faction", "kingdom", "empire", "guild", "religion", "order",
+        "house", "company", "academy", "military_unit",
+        "world", "continent", "region", "kingdom_region", "city",
+        "district", "landmark", "dungeon", "ruin", "fortress", "route",
+        "era", "timeline_event", "war", "treaty", "catastrophe",
+        "migration", "dynastic_change",
+        "magic_system", "power_rule", "summoning_rule", "technology_rule",
+        "cosmic_rule", "taboo", "ritual", "resource_rule",
+        "artifact", "weapon", "relic", "document_item", "seal", "device",
+        "canon_rule", "continuity_constraint", "author_note",
+        "retcon_record", "issue_record",
+        "setting", "worldbuilding", "story", "reference", "guide"
+      ]
+    },
+
+    "project_id": {
+      "type": "string",
+      "description": "이 노트가 속한 프로젝트/크로니클 ID",
+      "examples": ["nry", "shared_multiverse", "future_project_01"],
+      "x-project-registry": {
+        "nry": "너라는 운율 (120화, 84만자)",
+        "shared_multiverse": "여러 프로젝트에 공유되는 세계관 규칙"
+      }
+    },
+
+    "canon_status": {
+      "type": "string",
+      "enum": ["official", "provisional", "draft", "deprecated", "retconned"],
+      "description": "캐논 신뢰 수준",
+      "x-usage-rules": {
+        "official": "하드 게이트 판정에 사용 가능. 최종 진실 공급원.",
+        "provisional": "soft_fail 근거로만 사용. 변경 가능성 있음.",
+        "draft": "참고용만. 확정 전.",
+        "deprecated": "감사에서 완전 제외. 구버전.",
+        "retconned": "감사에서 완전 제외. 신버전이 존재함."
+      }
+    },
+
+    "scope": {
+      "type": "string",
+      "enum": ["project_only", "shared_world", "cross_project", "reference_only", "deprecated_scope"],
+      "description": "이 노트가 유효한 범위",
+      "x-scope-rules": {
+        "project_only": "단일 프로젝트 내에서만 유효",
+        "shared_world": "관련된 모든 프로젝트에 유효 (세계 규칙 등)",
+        "cross_project": "의도적으로 여러 프로젝트에 재사용",
+        "reference_only": "유용한 배경 자료. 권위 있는 출처 아님.",
+        "deprecated_scope": "정상 감사에서 제외"
+      }
+    },
+
+    "source_priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "충돌 해결용 우선순위. 낮은 숫자가 높은 우선순위.",
+      "x-priority-guide": {
+        "0": "공유 최고 캐논 (멀티버스 수준 규칙)",
+        "1": "공식 핵심 캐논 (운율 시스템, 작품 설정, 주인공 시트)",
+        "2": "공식 지원 캐논 (서브 캐릭터, 장소, 파벌)",
+        "3": "잠정(provisional)",
+        "4": "초안/참고 자료",
+        "5": "deprecated/retconned 역사적 자료"
+      }
+    },
+
+    "status": {
+      "type": "string",
+      "enum": [
+        "active", "inactive", "destroyed", "missing",
+        "sealed", "dead", "merged", "historical",
+        "complete", "in-progress", "stub", "needs-review"
+      ],
+      "description": "개체 자체의 운영 상태 (canon_status와 별개)"
+    },
+
+    "summary": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "캐노니컬 한 줄 요약 (에이전트 컨텍스트 윈도우 절약용)"
+    },
+
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "에이전트 entity 정규화에 사용"
+    },
+
+    "era": {
+      "type": ["string", "null"],
+      "description": "시대/시기 (너라는 운율: Phase-1~5 또는 현대 대학 시기)"
+    },
+
+    "timeline_start": {
+      "type": ["string", "null"],
+      "description": "개체가 유효한 첫 시점 (화 번호 또는 날짜). 예: 'ep_001', '3월 개강'"
+    },
+
+    "timeline_end": {
+      "type": ["string", "null"],
+      "description": "개체가 유효한 마지막 시점 (null = 현재까지 유효)"
+    },
+
+    "region": {
+      "type": ["string", "null"],
+      "description": "주요 활동 장소/지역"
+    },
+
+    "parent_entity": {
+      "type": ["string", "null"],
+      "description": "상위 개체 ID (도시 → 지역, 파벌 지부 → 파벌 본부 등)"
+    },
+
+    "affiliations": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "소속 조직/파벌 ID 목록"
+    },
+
+    "related_entities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "핵심 관련 개체 ID 목록 (Obsidian 링크 대상)"
+    },
+
+    "governing_rules": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "이 개체에 적용되는 규칙 ID 목록 (일관성 검사에 사용)"
+    },
+
+    "crosslinks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "볼트 레벨 경로 참조 (멀티프로젝트 확장 시 사용)"
+    },
+
+    "continuity_risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "이 노트가 위반될 때의 서사적 위험도. Canon Auditor 우선순위 결정에 사용.",
+      "x-risk-guide": {
+        "critical": "핵심 세계관 규칙, 주인공 핵심 설정 — 위반 즉시 하드 게이트",
+        "high": "주요 캐릭터 속성, 핵심 플롯 요소 — 위반 시 고우선 검토",
+        "medium": "보조 캐릭터 설정, 부수적 세계관 — 위반 시 중간 검토",
+        "low": "배경 정보, 분위기 설정 — 위반 시 메모"
+      }
+    },
+
+    "visibility": {
+      "type": "string",
+      "enum": ["public", "internal", "restricted", "spoiler_sensitive"],
+      "description": "공개 범위 (스포일러 민감도 관리)"
+    },
+
+    "last_reviewed": {
+      "type": "string",
+      "format": "date",
+      "description": "마지막 캐논 검증 날짜 (YYYY-MM-DD)"
+    },
+
+    "reviewed_by": {
+      "type": ["string", "null"],
+      "description": "검증한 사람 (보통 'author')"
+    },
+
+    "retconned_by": {
+      "type": ["string", "null"],
+      "description": "이 노트가 개정된 경우 신버전 노트 ID"
+    },
+
+    "supersedes": {
+      "type": ["string", "null"],
+      "description": "이 노트가 대체하는 구버전 노트 ID"
+    },
+
+    "episode_scope": {
+      "type": ["string", "null"],
+      "description": "이 설정이 유효한 화 범위",
+      "examples": ["전체", "Phase-1 (1-25화)", "Phase-3 이후"]
+    },
+
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "notes": {
+      "type": ["string", "null"],
+      "description": "관리자용 메모"
+    }
+  },
+
+  "x-governance-rules": {
+    "rule_1": "frontmatter 없는 노트는 draft로 처리 — 하드 게이트 사용 불가",
+    "rule_2": "official > provisional > draft 순으로 신뢰",
+    "rule_3": "source_priority 낮은 숫자가 충돌 시 우선",
+    "rule_4": "shared_world가 project_only보다 자동으로 강하지 않음 — scope는 독립적",
+    "rule_5": "deprecated / retconned는 정상 감사에서 제외",
+    "rule_6": "sandbox 폴더 노트는 비권위적 — 감사에 사용 불가"
+  },
+
+  "x-retrieval-order": [
+    "1. 현재 project_id 노트",
+    "2. shared_world 노트",
+    "3. 직접 related_entities",
+    "4. timeline 관련 노트",
+    "5. governing_rules 노트",
+    "6. issue_record 노트",
+    "7. 그 다음 광의적 시맨틱 검색"
+  ]
+}

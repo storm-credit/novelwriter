@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "novelwriter/manager_verdict",
+  "title": "ManagerVerdict",
+  "description": "Domain Manager가 specialist 결과를 통합하여 생성하는 최종 도메인 판정",
+  "type": "object",
+  "required": ["verdict_id", "manager", "unit_id", "overall_verdict", "issues"],
+  "properties": {
+    "verdict_id": {
+      "type": "string",
+      "description": "판정 고유 ID (예: VD-ep040-lore-001)"
+    },
+    "manager": {
+      "type": "string",
+      "enum": [
+        "Lore & Canon Manager",
+        "Plot & Causality Manager",
+        "Character Integrity Manager",
+        "Narrative Craft Manager",
+        "Revision & Patch Manager",
+        "Evidence & Memory Manager",
+        "Story Program Manager"
+      ]
+    },
+    "unit_id": {
+      "type": "string",
+      "description": "감사 대상 story_unit ID"
+    },
+    "overall_verdict": {
+      "type": "string",
+      "enum": ["pass", "soft_fail", "fail"],
+      "description": "도메인 종합 판정"
+    },
+    "blocked_for_publish": {
+      "type": "boolean",
+      "default": false,
+      "description": "하드 게이트 위반으로 발행 블록 여부"
+    },
+    "requires_human_review": {
+      "type": "boolean",
+      "default": false
+    },
+    "hard_gate_violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gate_type": { "type": "string" },
+          "issue_id": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "description": "이 도메인에서 발견된 이슈 ID 목록",
+      "items": {
+        "type": "object",
+        "required": ["issue_id", "severity", "verdict"],
+        "properties": {
+          "issue_id": { "type": "string" },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low", "info"]
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["pass", "soft_fail", "fail"]
+          }
+        }
+      }
+    },
+    "issue_counts": {
+      "type": "object",
+      "properties": {
+        "critical": { "type": "integer", "minimum": 0 },
+        "high": { "type": "integer", "minimum": 0 },
+        "medium": { "type": "integer", "minimum": 0 },
+        "low": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "recommended_action": {
+      "type": "string",
+      "enum": [
+        "approve_as_is",
+        "note_only",
+        "line_edit_then_recheck",
+        "scene_patch_then_recheck",
+        "chapter_rewrite",
+        "arc_review_required",
+        "human_decision_required"
+      ]
+    },
+    "escalations": {
+      "type": "array",
+      "description": "Story PM으로 에스컬레이션할 이슈",
+      "items": {
+        "type": "object",
+        "required": ["issue_id", "reason"],
+        "properties": {
+          "issue_id": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
