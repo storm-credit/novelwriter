@@ -19,7 +19,7 @@
 2. **우선순위**: 이슈 중요도 순서 결정
 3. **충돌 중재**: 서로 모순되는 Manager 판정을 증거 기반으로 해결
 4. **최종 액션 결정**: approve / note / patch / rewrite / escalate_to_human
-5. **게이트 최종 판정**: 모든 하드 게이트 위반은 PM이 최종 확인
+5. **서사 균형 최종 판정**: 모든 서사 균형 원칙 위반은 PM이 최종 확인
 
 ---
 
@@ -81,7 +81,7 @@ Task(
 # 3단계: 감리 (초안 완성 후)
 Task(
   description="Audit Manager: 에테르 3장 감리",
-  prompt="Read C:\\novel\\novelwriter\\prompts\\managers\\audit_manager.md and act as Audit Manager. Task: 에테르 대륙 3장 초안 전체 감리. 하드 게이트 우선."
+  prompt="Read C:\\novel\\novelwriter\\prompts\\managers\\audit_manager.md and act as Audit Manager. Task: 에테르 대륙 3장 초안 전체 감리. 서사 균형 원칙 우선."
 )
 ```
 
@@ -89,7 +89,7 @@ Task(
 
 ```
 항상 활성화:
-  → Task → Audit Manager (등가교환 법칙 체크 필수)
+  → Task → Audit Manager (소환의 무게 / 서사 균형 체크 필수)
   → Task → Writing Manager (집필 지원)
 
 대륙 보스전 / 크로니클 클라이맥스:
@@ -99,7 +99,7 @@ Task(
   → Task → Design Manager 먼저 → Writing Manager → Audit Manager
 
 소환 영웅 강림 씬 포함:
-  → Audit Manager에 Canon Auditor 우선 실행 지시 (등가교환 검증)
+  → Audit Manager에 Canon Auditor 우선 실행 지시 (소환의 무게 검증)
 
 차원의 장막 횡단 씬:
   → Audit Manager에 Canon Auditor + Timeline Auditor 동시 실행 지시
@@ -125,12 +125,12 @@ Task(
 
 | 상황 | 액션 |
 |------|------|
-| 하드 게이트 위반 0 + 이슈 0 | `approve_as_is` |
-| 하드 게이트 위반 0 + low/info 이슈만 | `note_only` |
-| 하드 게이트 위반 0 + medium 이슈 | `line_edit_then_recheck` |
-| 하드 게이트 위반 1 + line_edit 가능 | `scene_patch_then_recheck` |
-| 하드 게이트 위반 1 + 큰 수정 필요 | `human_decision_required` |
-| 복수 하드 게이트 위반 | `human_decision_required` |
+| 서사 균형 위반 0 + 이슈 0 | `approve_as_is` |
+| 서사 균형 위반 0 + low/info 이슈만 | `note_only` |
+| 서사 균형 위반 0 + medium 이슈 | `line_edit_then_recheck` |
+| 서사 균형 위반 1 + line_edit 가능 | `scene_patch_then_recheck` |
+| 서사 균형 위반 1 + 큰 수정 필요 | `human_decision_required` |
+| 복수 서사 균형 위반 | `human_decision_required` |
 | arc_rewrite 수준 이슈 | `human_decision_required` (항상) |
 
 ---
@@ -146,7 +146,7 @@ Task(
   "final_action": "approve_as_is | note_only | line_edit_then_recheck | scene_patch_then_recheck | chapter_rewrite | human_decision_required",
   "blocked_for_publish": false,
   "requires_human_review": false,
-  "hard_gate_violations": [],
+  "narrative_balance_violations": [],
   "total_issues": {
     "critical": 0, "high": 0, "medium": 0, "low": 0
   },
@@ -161,4 +161,4 @@ Task(
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner | 아스트라리스 크로니클*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner | 아스트라리스 크로니클*

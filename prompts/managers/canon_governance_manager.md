@@ -23,7 +23,7 @@ Obsidian canon vault = 최종 진실
 모델의 추론 ≠ 최종 진실
 ```
 
-canon_status가 `official`인 노트만 하드 게이트 판정에 사용됩니다.
+canon_status가 `official`인 노트만 서사 균형 원칙 판정에 사용됩니다.
 `provisional`, `draft`는 참고용으로만 사용됩니다.
 `deprecated`, `retconned`은 감사에서 제외됩니다.
 
@@ -82,7 +82,7 @@ tags: [태그1, 태그2]
 
 | 값 | 의미 | 감사 사용 가능 여부 |
 |----|------|-------------------|
-| `official` | 작가가 확정한 공식 설정 | 하드 게이트 판정에 사용 |
+| `official` | 작가가 확정한 공식 설정 | 서사 균형 원칙 판정에 사용 |
 | `provisional` | 잠정 설정, 변경 가능 | 참고용만 (soft_fail 근거) |
 | `draft` | 초안, 미확정 | 참고용만 |
 | `deprecated` | 구버전, 더 이상 유효하지 않음 | 감사 제외 |
@@ -173,7 +173,7 @@ Priority 5 (역사·참고):
 | 에반 (Evan) | The Forgotten Summoner, 잊힌 소환사, 소환사 |
 | 루미에 (Lumie) | Λumie, 빛의 요정, 아카식 번역가 |
 | 차원의 장막 | Dimensional Veil, 에테르 안개 |
-| 등가교환 | 우주적 대가, Cost of Plausibility |
+| 혈진 / 소환의 낙인 | Blood Seal, 소환 Mark, 대자연의 결제 시스템 |
 | 아스트라리스 | Astralis Chronicle, 제1 크로니클 |
 | 망각의 들판 | Forgotten Vale, 영혼 폐기장 |
 | 심연의 감옥 | Abyssal Layer |
@@ -182,9 +182,9 @@ Priority 5 (역사·참고):
 
 ## I. Hard Rules
 
-1. **frontmatter 없는 노트**: 자동으로 `draft` 처리 — 하드 게이트에 사용 불가
+1. **frontmatter 없는 노트**: 자동으로 `draft` 처리 — 서사 균형 원칙 판정에 사용 불가
 2. **`deprecated`/`retconned` 노트를 근거로 사용한 이슈**: 즉시 DISCARD
-3. **`provisional` 노트를 하드 게이트 근거로 사용 금지**: soft_fail 근거로만 허용
+3. **`provisional` 노트를 서사 균형 원칙 판정 근거로 사용 금지**: soft_fail 근거로만 허용
 4. **노트 경로 변경 감지**: 동일 내용 중복 파일 발견 시 에스컬레이션
 
 ---
@@ -225,4 +225,4 @@ Priority 5 (역사·참고):
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner | 아스트라리스 크로니클*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner | 아스트라리스 크로니클*

@@ -13,7 +13,7 @@
 
 **감리군의 범위**:
 - 완성된 원고의 캐논·구조·개연성·보이스 검증
-- 하드 게이트 강제 및 승격 차단
+- 서사 균형 원칙 준수 확인 및 승격 차단
 - 수정 요청 발행 및 회귀검사 예약
 
 **감리군의 경계**:
@@ -66,7 +66,7 @@ Task(
 ### 단장 감리 표준 순서
 
 ```
-1. Task → Canon Auditor (A-01):      6대 절대 법칙 위반 여부 (하드 게이트)
+1. Task → Canon Auditor (A-01):      서사 균형 원칙 위반 여부 (소환의 무게 / 루미에의 역할 / 세계의 반응 / 차원 이동의 대가)
 2. Task → Timeline Auditor (A-02):   시간·이동·차원 오류
 3. Task → Motivation Checker (A-04): 행동 동기 충분한가
 4. Task → Voice Auditor (A-05):      대사·보이스 일관성
@@ -87,16 +87,19 @@ Task(
 
 ```
 Task(
-  description="Canon Auditor A-01: 에테르 대륙 3장 등가교환 법칙 감리",
-  prompt="Read C:\\novel\\novelwriter\\prompts\\audit\\01_canon_auditor.md and act as Canon Auditor. Audit chapter 3 of The Forgotten Summoner 아스트라리스 크로니클 에테르 대륙편. Check all 6 absolute law violations (등가교환, 차원 독립성, 우주적 결손, 영혼의 궤적, 루미에 제약, 차원 이동 대가). Canon vault: C:\\novel\\theforgottensummoner\\THE FORGOTTEN SUMMONER\\ Draft: [초안 내용 또는 경로]"
+  description="Canon Auditor A-01: 에테르 대륙 3장 소환의 무게 감리",
+  prompt="Read C:\\novel\\novelwriter\\prompts\\audit\\01_canon_auditor.md and act as Canon Auditor. Audit chapter 3 of The Forgotten Summoner 아스트라리스 크로니클 에테르 대륙편. 서사 균형 원칙 위반 여부 확인: 소환의 무게(혈진 수명 소모 묘사), 루미에의 역할 경계, 세계의 반응(마력 폭풍), 차원 이동의 대가(육체 부담). Canon vault: C:\\novel\\theforgottensummoner\\THE FORGOTTEN SUMMONER\\ Draft: [초안 내용 또는 경로]"
 )
 ```
 
-### 하드 게이트 항목 (실패 시 즉시 중단)
+### 서사 균형 원칙 점검 항목 (위반 시 즉시 플래그)
 
-| 에이전트 | 하드 게이트 조건 |
+| 에이전트 | 점검 항목 |
 |---------|---------------|
-| Canon Auditor | 6대 절대 법칙 위반 (등가교환/차원 독립성/우주적 결손/영혼의 궤적/루미에 제약/차원 이동 대가) |
+| Canon Auditor | 소환의 무게 — 혈진 사용 시 수명 소모 묘사 존재 여부 |
+| Canon Auditor | 루미에의 역할 — 전투 참여 여부 (해독·안내 경계 준수) |
+| Canon Auditor | 세계의 반응 — 과도한 마력 사용 시 마력 폭풍(Arcane Storm) 묘사 여부 |
+| Canon Auditor | 차원 이동의 대가 — 장막 횡단 시 육체 부담 묘사 여부 |
 | Timeline Auditor | 대륙 이동/차원 횡단 순서 위반, 마일스톤 순서 위반 |
 | Causality Auditor | 핵심 전환에 브리지 없음 |
 | Motivation Checker | Arc 역행 행동 |
@@ -118,7 +121,7 @@ Task(
     → 있음: issue_deduper로 병합
 
 판정 체크:
-[ ] 하드 게이트 실패가 있는가?
+[ ] 서사 균형 원칙 실패가 있는가?
     → 있음: blocked_for_publish = true, 이후 에이전트 실행 중단
 [ ] soft fail만 있는가?
     → 있음: Patch Generator 호출, 수정안 생성 후 계속
@@ -154,7 +157,7 @@ Task(
 
 | 치명도 | 조건 | 처리 |
 |-------|------|------|
-| **critical** | 하드 게이트 실패 / 6대 절대 법칙 위반 | blocked_for_publish = true, 즉시 수정 |
+| **critical** | 서사 균형 원칙 위반 (소환의 무게 누락 / 루미에 전투 참여 / 마력 폭풍 무시 / 차원 이동 대가 누락) | blocked_for_publish = true, 즉시 수정 |
 | **major** | 인과 붕괴 / 동기 역행 / 아크 손상 | 집필군 리워크 요청 |
 | **minor** | 문체 이탈 / 설명 과다 / 작은 타임라인 오류 | Patch Generator 수정안으로 처리 |
 | **info** | 독자 이탈 위험 예측 / 구조 개선 제안 | 참고용, 수정 강제 없음 |
@@ -183,7 +186,7 @@ critical/major 이슈 발생 시:
 ## H. Hard Rules
 
 1. **증거 없는 이슈는 발행하지 않는다.** confidence < 0.5인 경우 기각.
-2. **하드 게이트 실패 시 이후 단계 진행을 차단한다.** (설정집 갱신·배포 불가)
+2. **서사 균형 원칙 실패 시 이후 단계 진행을 차단한다.** (설정집 갱신·배포 불가)
 3. **감리군은 수정 자체를 하지 않는다.** 수정 요청만 발행한다.
 4. **이슈 치명도 분류 없이 최종 판정을 내리지 않는다.**
 5. **회귀검사 없이 리워크 완료를 선언하지 않는다.**
@@ -213,7 +216,7 @@ critical/major 이슈 발생 시:
   },
   "verdict": {
     "blocked_for_publish": false,
-    "hard_gate_violations": [],
+    "narrative_balance_violations": [],
     "issue_summary": {
       "critical": 0,
       "major": 1,
@@ -226,7 +229,7 @@ critical/major 이슈 발생 시:
       "id": "ISS-E03-001",
       "severity": "major",
       "agent": "Motivation Checker",
-      "description": "에테르 3장 4씬: 에반이 소환 영웅을 강림시키지만 수명 대가 묘사 부재 — 등가교환 법칙 위반 위험",
+      "description": "에테르 3장 4씬: 에반이 소환 영웅을 강림시키지만 수명 소모 묘사 부재 — 소환의 무게 원칙 미충족",
       "evidence": {
         "source_note": "00-2. 세계의 작동 원리.md",
         "citation": "소환 Mark: 한 번 발동할 때마다 수개월 치의 수명과 생명력이 증발"
@@ -248,4 +251,4 @@ critical/major 이슈 발생 시:
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner | AUDIT WING Manager*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner | AUDIT WING Manager*

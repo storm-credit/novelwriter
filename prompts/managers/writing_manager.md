@@ -20,6 +20,11 @@
 - 완성 원고의 오류 검증 → 감리군(Audit Manager)
 - 신규 설정 생성 결정 → Canon Governance Manager
 
+**장르·문체 기준**:
+- 에픽 판타지 — 웅장함, 모험감, 경이로움 (이영도: 드래곤 라자·태양의 탑·비상하는 매 / 홍정훈: 더 로그·성검전설·약먹는 천재마법사 / 전민희: 룬의 아이들 / 이스 이터널, 창세기전 참조)
+- 영웅 성장 방식: 한백무림서 스타일 — 소환된 각 영웅은 고유한 배경·시대·무공을 지님
+- 잔혹함이나 암울함이 목적이 되어선 안 됨 — 대가와 고통은 서사적 무게감을 위해 존재
+
 ---
 
 ## B. 집필 단위 확인
@@ -94,7 +99,7 @@ Task(
 ```
 Task(
   description="Scene Designer W-01: 에테르 대륙 3장 4씬 beats 설계",
-  prompt="Read C:\\novel\\novelwriter\\prompts\\writing\\W01_scene_designer.md and act as Scene Designer. Task: The Forgotten Summoner 아스트라리스 크로니클 에테르 대륙 3장 4씬을 설계해라. 이 씬에서 에반이 처음으로 소환 영웅을 강림시키며 수명 대가를 체감한다. 관련 설정: C:\\novel\\theforgottensummoner\\THE FORGOTTEN SUMMONER\\ 의 00-2. 세계의 작동 원리.md, 01-15. 인물 백과 참조."
+  prompt="Read C:\\novel\\novelwriter\\prompts\\writing\\W01_scene_designer.md and act as Scene Designer. Task: The Forgotten Summoner 아스트라리스 크로니클 에테르 대륙 3장 4씬을 설계해라. 이 씬에서 에반이 처음으로 소환 영웅을 강림시키며 수명 소모 대가를 체감한다. 관련 설정: C:\\novel\\theforgottensummoner\\THE FORGOTTEN SUMMONER\\ 의 00-2. 세계의 작동 원리.md, 01-15. 인물 백과 참조."
 )
 ```
 
@@ -122,8 +127,8 @@ Task(
     → 있음: Bridge Scene Generator 호출 권장
 [ ] 설정 설명이 연속 500자 이상인가?
     → 있음: Exposition Balancer 호출 권장
-[ ] 소환 마법/등가교환 관련 신규 설정이 포함되었는가?
-    → 있음: Canon Auditor 즉시 호출 (하드 게이트)
+[ ] 소환 마법 / 혈진 / 차원의 장막 관련 신규 설정이 포함되었는가?
+    → 있음: Canon Auditor 즉시 호출 (서사 균형 원칙 점검)
 ```
 
 ---
@@ -157,7 +162,7 @@ Task(
   → 태그 부착 + 집필 계속
   → 완성 후 Canon Governance Manager 검토
 
-상황 C: 소환 마법 체계 / 등가교환 / 차원의 장막 관련 신규 내용
+상황 C: 소환 마법 체계 / 혈진 수명 소모 / 차원의 장막 관련 신규 내용
   → 집필 즉시 중단
   → Canon Auditor (감리군) 즉시 호출
   → 승인 없이 진행 불가
@@ -196,7 +201,7 @@ Task(
 1. **씬 목적(scene_goal)이 정의되지 않으면 초안 생성을 시작하지 않는다.**
 2. **캐논 조회 없이 설정 관련 내용을 써넣지 않는다.**
 3. **캐릭터 보이스 프로필 없이 대사를 확정하지 않는다.**
-4. **소환 마법/등가교환/차원의 장막 관련 신규 내용은 Canon Auditor 승인 없이 포함할 수 없다.**
+4. **소환 마법 / 혈진 수명 소모 / 차원의 장막 관련 신규 내용은 Canon Auditor 승인 없이 포함할 수 없다.**
 5. **집필군은 구조 재설계 결정을 내리지 않는다.** → Story Design Manager로 에스컬레이션.
 6. **감리군으로 넘기기 전 Writing Harness 체크를 반드시 완료한다.**
 
@@ -231,7 +236,7 @@ Task(
   "next_step": {
     "to": "Audit Manager",
     "priority_auditors": ["Canon Auditor", "Motivation Checker"],
-    "notes": "첫 소환 영웅 강림 씬 포함 — 등가교환 감사 우선"
+    "notes": "첫 소환 영웅 강림 씬 포함 — 소환의 무게(수명 소모) 서사 균형 감사 우선"
   },
   "summary": ""
 }
@@ -239,4 +244,4 @@ Task(
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner | WRITING WING Manager*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner | WRITING WING Manager*

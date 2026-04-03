@@ -20,6 +20,11 @@
 - 실제 문장 초안 작성 → 집필군(Writing Manager)
 - 완성된 원고의 오류 검증 → 감리군(Audit Manager)
 
+**장르·톤 기준**:
+- 에픽 판타지 — 웅장함, 모험감, 경이로움 (이영도: 드래곤 라자·태양의 탑·비상하는 매 / 홍정훈: 더 로그·성검전설·약먹는 천재마법사 / 전민희: 룬의 아이들 / 이스 이터널, 창세기전 참조)
+- 영웅 성장 방식: 한백무림서 스타일 — 소환된 각 영웅은 고유한 배경·시대·무공을 지님
+- 서사 균형 4원칙을 설계 단계부터 반영: 소환의 무게 / 루미에의 역할 / 세계의 반응 / 차원 이동의 대가
+
 ---
 
 ## B. 설계 단계 판별
@@ -93,7 +98,7 @@ Task(
 ```
 Task(
   description="Plot Designer D-02: 에테르 대륙 3-5장 탐험 루트 및 갈등 씨앗 배치 설계",
-  prompt="Read C:\\novel\\novelwriter\\prompts\\design\\D02_plot_designer.md and act as Plot Designer. Task: The Forgotten Summoner 아스트라리스 크로니클 에테르 대륙 3-5장 구간의 사건 배치를 설계해라. 성국의 마녀 사냥 복선과 에반의 첫 소환 대가 체감이 이 구간에서 시작되어야 한다. 설정집 경로: C:\\novel\\theforgottensummoner\\THE FORGOTTEN SUMMONER\\"
+  prompt="Read C:\\novel\\novelwriter\\prompts\\design\\D02_plot_designer.md and act as Plot Designer. Task: The Forgotten Summoner 아스트라리스 크로니클 에테르 대륙 3-5장 구간의 사건 배치를 설계해라. 성국의 마녀 사냥 복선과 에반의 첫 소환 대가(수명 소모) 체감이 이 구간에서 시작되어야 한다. 설정집 경로: C:\\novel\\theforgottensummoner\\THE FORGOTTEN SUMMONER\\"
 )
 ```
 
@@ -195,4 +200,4 @@ Task(
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner | DESIGN WING Manager*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner | DESIGN WING Manager*
