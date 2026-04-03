@@ -52,7 +52,7 @@
 
 ## E. 인과 체크 기준
 
-### 즉시 FAIL (Hard Gate)
+### 즉시 FAIL
 - 핵심 전환점(소환 각성/대륙 결전/차원 횡단/최종 결전)에 명백한 브릿지 없음 + confidence ≥ 0.8
 
 ### soft_fail
@@ -106,4 +106,4 @@
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner*

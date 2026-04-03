@@ -118,4 +118,4 @@
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner*

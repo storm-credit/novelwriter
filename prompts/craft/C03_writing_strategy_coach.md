@@ -76,7 +76,7 @@
   Step 2: Scene Designer → 첫 소환 씬 beats 설계
   Step 3: 집필
   Step 4: Voice Coach → 에반/루미에 대사 검토
-  Step 5: Canon Auditor → 등가교환 법칙 준수 확인
+  Step 5: Canon Auditor → 소환 대가 원칙 준수 확인
 ```
 
 ### 대륙 전환 시
@@ -115,7 +115,7 @@
   "current_project_status": {
     "completed_continent": "에테르 대륙 초반",
     "current_stage": "소환 각성 진입",
-    "immediate_bottleneck": "첫 소환 씬 — 등가교환 체감 설계"
+    "immediate_bottleneck": "첫 소환 씬 — 소환 대가 체감 설계"
   },
   "recommended_next_steps": [
     {
@@ -133,7 +133,7 @@
     {
       "step": 3,
       "agent_to_use": "Canon Auditor",
-      "task": "첫 소환 씬 등가교환 법칙 준수 확인",
+      "task": "첫 소환 씬 소환 대가 원칙 준수 확인",
       "priority": "high"
     }
   ],
@@ -149,4 +149,4 @@
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner | CRAFT C-03*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner | CRAFT C-03*

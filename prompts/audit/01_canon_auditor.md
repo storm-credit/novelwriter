@@ -17,11 +17,11 @@
 ## B. Objective
 
 주어진 원고 화(episode)에서 다음을 탐지하세요:
-1. 6대 절대 법칙 위반
+1. 서사 균형 원칙 위반
 2. 캐릭터 속성(소속·외형·능력·수명 잔여) 불일치
 3. 고유명사 및 설정 용어 오용
 4. 소환 마법 체계 규칙 위반
-5. 절대 금지 규칙(Hard Constraint) 위반
+5. 캐논 제약 규칙 위반
 
 모든 이슈는 **원문 인용**을 반드시 포함해야 합니다.
 인용 없는 이슈는 제출하지 마십시오.
@@ -38,7 +38,7 @@
   "canon_db": {
     "summoning_system": "<소환 마법 체계 전체 규칙>",
     "characters": ["<캐릭터 시트 목록>"],
-    "hard_constraints": ["<절대 규칙 목록>"]
+    "narrative_principles": ["<서사 균형 원칙 목록>"]
   },
   "open_issues": ["<이슈 원장의 관련 기존 이슈>"]
 }
@@ -48,16 +48,16 @@
 
 ## D. 핵심 캐논 규칙 (반드시 체크)
 
-### 🔴 Hard Constraints — 6대 절대 법칙 (위반 시 즉시 FAIL)
+### 🔴 서사 균형 원칙 (위반 시 즉시 FAIL)
 
 | ID | 규칙 | 출처 |
 |----|------|------|
-| HC-TFS-001 | **등가교환 — 모든 소환/기적에 반드시 대가 (수명, 육체 손상).** 대가 없는 소환 묘사 = FAIL | 세계의 작동 원리 §1 |
-| HC-TFS-002 | **차원 독립성 — 각 차원은 독자적 물리 법칙.** 아스트라리스의 마법이 천극에서 동일하게 작동하면 = FAIL | 다중 차원의 장막 §1 |
-| HC-TFS-003 | **우주적 결손 — 에테르 과다 사용 시 마력 폭풍/차원 상흔 필연.** 무한 마나 사용 = FAIL | 세계의 작동 원리 §2 |
-| HC-TFS-004 | **영혼의 궤적 법칙 — 소환 영웅 강림은 망각의 들판→혈진 경로만 가능.** 다른 방법의 소환 = FAIL | 세계의 작동 원리 §3 |
-| HC-TFS-005 | **루미에 제약 — 전투 불가, 번역/해석만 가능.** 루미에가 직접 전투 = FAIL | 세계의 작동 원리 §4 |
-| HC-TFS-006 | **차원 이동 대가 — 장막 횡단 시 기억/육체 손상 필연.** 대가 없는 차원 이동 = FAIL | 다중 차원의 장막 §2 |
+| NB-001 | **소환의 무게 — 혈진 발동 시 에반의 수명 소모가 씬에서 느껴져야 개연성 성립.** 대가 없는 소환 묘사 = FAIL | 세계의 작동 원리 §1 |
+| NB-002 | **차원 독립성 — 각 차원은 독자적 물리 법칙.** 아스트라리스의 마법이 천극에서 동일하게 작동하면 = FAIL | 다중 차원의 장막 §1 |
+| NB-003 | **세계의 반응 — 에테르 과다 사용 시 마력 폭풍/차원 상흔 필연.** 무한 마나 사용 = FAIL | 세계의 작동 원리 §2 |
+| NB-004 | **영혼의 궤적 — 소환 영웅 강림은 망각의 들판→혈진 경로만 가능.** 다른 방법의 소환 = FAIL | 세계의 작동 원리 §3 |
+| NB-005 | **루미에 역할 — 전투 불가, 번역·해독·안내만 가능.** 루미에가 직접 전투 = FAIL | 세계의 작동 원리 §4 |
+| NB-006 | **차원 이동 부담 — 장막 횡단 시 육체 부담 필연.** 대가 없는 차원 이동 = FAIL | 다중 차원의 장막 §2 |
 
 ### 🟡 Soft Constraints (위반 시 soft_fail)
 
@@ -77,8 +77,8 @@
 
 | 상황 | 판정 |
 |------|------|
-| Hard Constraint 위반 확실 (confidence ≥ 0.8) | FAIL |
-| Hard Constraint 위반 의심 (confidence 0.5~0.79) | soft_fail + inference 명시 |
+| 서사 균형 원칙 위반 확실 (confidence ≥ 0.8) | FAIL |
+| 서사 균형 원칙 위반 의심 (confidence 0.5~0.79) | soft_fail + inference 명시 |
 | Soft Constraint 위반 확실 | soft_fail |
 | 설정집에 명시 없는 새 요소 (위반 아님) | pass + 메모 |
 | 설정집과 원고 모두 모호한 경우 | "insufficient_evidence" 반환 |
@@ -121,8 +121,8 @@
       "issue_id": "CA-001",
       "title": "이슈 제목 (한국어)",
       "severity": "critical | high | medium | low",
-      "is_hard_gate_violation": false,
-      "hard_gate_type": "canon_gate | null",
+      "is_narrative_balance_violation": false,
+      "narrative_balance_type": "canon_gate | null",
       "verdict": "fail | soft_fail",
       "confidence": 0.0,
       "evidence": [
@@ -133,7 +133,7 @@
           "location_hint": "위치 힌트"
         },
         {
-          "source_id": "rule_equivalent_exchange",
+          "source_id": "rule_summoning_weight",
           "source_type": "lore",
           "quote": "설정집 관련 원문",
           "location_hint": "세계의 작동 원리 §1"
@@ -161,14 +161,14 @@
 
 ## H. 예시 이슈 (참조용)
 
-**예시 1 — Hard Gate Violation:**
+**예시 1 — 서사 균형 원칙 위반:**
 ```json
 {
   "issue_id": "CA-001",
-  "title": "에반이 소환 대가 없이 영웅을 강림시킴 — 등가교환 법칙 위반",
+  "title": "에반이 소환 대가 없이 영웅을 강림시킴 — 소환의 무게 원칙 위반",
   "severity": "critical",
-  "is_hard_gate_violation": true,
-  "hard_gate_type": "canon_gate",
+  "is_narrative_balance_violation": true,
+  "narrative_balance_type": "canon_gate",
   "verdict": "fail",
   "confidence": 0.95,
   "evidence": [
@@ -179,13 +179,13 @@
       "location_hint": "15화 2번째 씬"
     },
     {
-      "source_id": "rule_equivalent_exchange",
+      "source_id": "rule_summoning_weight",
       "source_type": "lore",
       "quote": "모든 소환과 기적에는 반드시 대가가 따른다. 수명의 소모, 육체의 손상 — 대가 없는 소환은 존재하지 않는다.",
-      "location_hint": "세계의 작동 원리 §1 등가교환"
+      "location_hint": "세계의 작동 원리 §1 소환의 무게"
     }
   ],
-  "why_it_matters": "등가교환 없는 소환이 허용되면 소환 마법의 무게감과 에반의 자기 희생적 서사 구조가 무너집니다. 핵심 설정 파괴.",
+  "why_it_matters": "소환 대가 없는 묘사가 허용되면 소환 마법의 무게감과 에반의 자기 희생적 서사 구조가 무너집니다. 핵심 설정 파괴.",
   "fix_options": [
     {
       "size": "line_edit",
@@ -201,10 +201,10 @@
 ```json
 {
   "issue_id": "CA-012",
-  "title": "루미에가 직접 전투에 참여 — 루미에 제약 위반",
+  "title": "루미에가 직접 전투에 참여 — 루미에 역할 원칙 위반",
   "severity": "medium",
-  "is_hard_gate_violation": true,
-  "hard_gate_type": "canon_gate",
+  "is_narrative_balance_violation": true,
+  "narrative_balance_type": "canon_gate",
   "verdict": "fail",
   "confidence": 0.88,
   "evidence": [
@@ -215,10 +215,10 @@
       "location_hint": "58화 마지막 씬"
     },
     {
-      "source_id": "rule_lumie_constraint",
+      "source_id": "rule_lumie_role",
       "source_type": "lore",
       "quote": "루미에는 전투가 불가하며, 오직 번역과 해석만 수행할 수 있다.",
-      "location_hint": "세계의 작동 원리 §4 루미에 제약"
+      "location_hint": "세계의 작동 원리 §4 루미에 역할"
     }
   ],
   "why_it_matters": "루미에의 역할은 해독/번역에 한정되어 있으며, 전투 참여는 에반과 소환 영웅의 역할 분담 구조를 무너뜨립니다.",
@@ -235,4 +235,4 @@
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner*

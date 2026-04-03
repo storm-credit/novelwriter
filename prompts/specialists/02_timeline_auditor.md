@@ -51,7 +51,7 @@
 | 1화 | **에반의 아스트라리스 차원 도착** — 에테르 대륙 상륙 |
 | 1화 | 에반 수명 잔여: 초기값 (소환 미사용) |
 | 에테르 대륙 구간 전체 | 에테르 대륙 탐색·첫 소환 각성 |
-| 크림슨 대륙 구간 전체 | 크림슨 대륙 진입·대가 체감 시작 |
+| 크림슨 대륙 구간 전체 | 크림슨 대륙 진입·소환 대가 체감 시작 |
 | 프로스트 대륙 구간 전체 | 프로스트 대륙·혹한기·방어전 |
 | 오벨리스크 대륙 구간 전체 | 오벨리스크 유적·크로니클 전환점 |
 | 해양 대륙 구간 전체 | 해양 대륙·동맹 결성 |
@@ -61,7 +61,7 @@
 
 ```
 초반    → 에반의 아스트라리스 차원 도착·에테르 대륙 상륙
-에테르  → 첫 소환 각성 (혈진·등가교환 최초 체험)
+에테르  → 첫 소환 각성 (혈진·소환 대가 최초 체험)
 크림슨  → 첫 대륙 보스전·소환 대가 본격 체감
 프로스트 → 루미에와의 신뢰 확립·방어전
 오벨리스크 → 크로니클 전환·차원의 장막 균열 발견
@@ -130,8 +130,8 @@
       "issue_id": "TL-001",
       "title": "이슈 제목",
       "severity": "critical | high | medium | low",
-      "is_hard_gate_violation": false,
-      "hard_gate_type": "timeline_gate | null",
+      "is_narrative_balance_violation": false,
+      "narrative_balance_type": "timeline_gate | null",
       "verdict": "fail | soft_fail",
       "confidence": 0.0,
       "evidence": [
@@ -162,4 +162,4 @@
 
 ---
 
-*프롬프트 버전: v2.0 | 소설: The Forgotten Summoner*
+*프롬프트 버전: v2.1 | 소설: The Forgotten Summoner*
