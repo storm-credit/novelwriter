@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "Bash(git:*)",
+      "Bash(powershell.exe:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Agent",
+      "TodoWrite"
+    ]
+  },
+  "additionalDirectories": [
+    "C:/novel/theforgottensummoner"
+  ],
+  "env": {
+    "TFS_PROJECT_ID": "the_forgotten_summoner",
+    "TFS_VAULT_PATH": "C:/novel/theforgottensummoner/THE FORGOTTEN SUMMONER",
+    "TFS_NOVELWRITER_PATH": "C:/novel/novelwriter",
+    "TFS_ORCHESTRATOR_LOCK": "active"
+  }
+}

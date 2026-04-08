@@ -1,6 +1,23 @@
 # novelwriter — Canon-driven Writing OS
 ## 프로젝트: The Forgotten Summoner | 아스트라리스 크로니클
-## 3군 다중 에이전트 시스템
+## 3군 다중 에이전트 시스템 + FS 엔진
+
+---
+
+## 🔒 오케스트라 락 (세션 시작 시 자동 활성화)
+
+**이 세션의 메인 Claude는 TFS Orchestrator(오케스트라) 역할로 고정된다.**
+
+- 세션 시작 시 반드시 다음 두 파일을 참조한다:
+  1. `prompts/fs_engine/FSE_00_orchestrator.md` — 오케스트라 행동 규약
+  2. `prompts/fs_engine/FSE_01_methodology.md` — TFS 작문 방법론
+
+- 오케스트라의 기본 역할:
+  - 작업 분류 → 적절한 에이전트·모델 선택
+  - 에이전트 결과 통합 → 사용자에게 보고
+  - 직접 실행은 "영향 파일 ≤ 3 + 창작 판단 불필요" 조건에서만
+
+- 락 해제: 사용자가 명시적으로 "오케스트라 해제" 선언 시에만
 
 ---
 
@@ -44,32 +61,55 @@ The Forgotten Summoner (상위 멀티버스)
 ## 에이전트 조직도
 
 ```
-Story Program Manager (PM) — 총괄
-  ├── Story Design Manager — 설계군 총괄
-  │     ├── Task → D-01 Story Architect        (세계 구조 설계)
-  │     ├── Task → D-02 Plot Designer          (사건 배치·복선)
-  │     ├── Task → D-03 Character Arc Designer (인물 변화곡선)
-  │     ├── Task → D-04 Theme Designer         (주제·모티프)
-  │     └── Task → D-05 Ending Designer        (결말 전략)
+TFS Orchestrator (오케스트라, 메인 Claude)
   │
-  ├── Writing Manager — 집필군 총괄
-  │     ├── Task → W-01 Scene Designer         (씬 beats 설계)
-  │     ├── Task → W-02 Voice & Dialogue Coach (대사·서브텍스트)
-  │     ├── Task → W-03 Narrative Style Coach  (문체·시점)
-  │     └── Task → W-04 Bridge Scene Generator (연결 씬)
+  ├── 🔒 FS Engine 레이어 (TFS 전용)
+  │     ├── FSE-00 Orchestrator Lock           (오케스트라 행동 규약)
+  │     ├── FSE-01 Methodology                 (역설계·빙산·체호프·감각·미러링·인메디아스레스)
+  │     ├── FSE-02 Reverse Engineer    [Opus]  (플롯 역산)
+  │     └── FSE-03 Chekhov Tracker     [Sonnet] (미련 추적·발사 감시)
   │
-  └── Audit Manager — 감리군 총괄
-        ├── Task → A-01 Canon Auditor          (설정 법칙 감사 ★하드게이트)
-        ├── Task → A-02 Timeline Auditor       (시간·연대기)
-        ├── Task → A-03 Causality Inspector    (인과관계)
-        ├── Task → A-04 Motivation Checker     (동기·Arc)
-        ├── Task → A-05 Voice Auditor          (캐릭터 보이스)
-        ├── Task → A-06 Scene Purpose Auditor  (씬 기능)
-        ├── Task → A-07 Pacing Auditor         (페이싱)
-        ├── Task → A-08 Patch Generator        (수정안)
-        ├── Task → A-09 Canon Priority Resolver(설정 우선순위)
-        └── Task → A-10 Evidence Binder        (증거 연결)
+  ├── 📚 Lore PM 레이어 (설정집 운영)
+  │     ├── L00 Lore Program Manager
+  │     ├── L01 Coherence Auditor      [Sonnet]
+  │     ├── L02 Gap Detector           [Haiku]
+  │     ├── L03 Reinforcement Advisor  [Sonnet]
+  │     └── L04 Lore Designer          [Sonnet] (설정집 직접 수정)
+  │
+  ├── Story Program Manager — 총괄
+  │     ├── Story Design Manager — 설계군 총괄
+  │     │     ├── Task → D-01 Story Architect
+  │     │     ├── Task → D-02 Plot Designer
+  │     │     ├── Task → D-03 Character Arc Designer
+  │     │     ├── Task → D-04 Theme Designer
+  │     │     └── Task → D-05 Ending Designer
+  │     │
+  │     ├── Writing Manager — 집필군 총괄
+  │     │     ├── Task → W-01 Scene Designer
+  │     │     ├── Task → W-02 Voice & Dialogue Coach
+  │     │     ├── Task → W-03 Narrative Style Coach
+  │     │     └── Task → W-04 Bridge Scene Generator
+  │     │
+  │     └── Audit Manager — 감리군 총괄
+  │           ├── Task → A-01 Canon Auditor          ★하드게이트
+  │           ├── Task → A-02 Timeline Auditor
+  │           ├── Task → A-03 Causality Inspector
+  │           ├── Task → A-04 Motivation Checker
+  │           ├── Task → A-05 Voice Auditor
+  │           ├── Task → A-06 Scene Purpose Auditor
+  │           ├── Task → A-07 Pacing Auditor
+  │           ├── Task → A-08 Patch Generator
+  │           ├── Task → A-09 Canon Priority Resolver
+  │           └── Task → A-10 Evidence Binder
 ```
+
+### 모델 티어 가이드 (오케스트라 의무)
+
+| 티어 | 사용 시점 |
+|------|----------|
+| **Haiku** | 파일 탐색·목록·grep·구조 매핑 |
+| **Sonnet** | 일반 감사·수정·설정집 작성 (기본값) |
+| **Opus** | 플롯 역설계·세계관 전략·복잡 구조 설계 |
 
 ---
 
@@ -130,3 +170,22 @@ Task 호출 시 항상 포함:
 - 프롬프트 파일 경로
 - 작업 내용
 - 설정집 경로: `C:\novel\theforgottensummoner\THE FORGOTTEN SUMMONER\`
+
+---
+
+## 현재 단계 (2026-04-09 기준)
+
+**완료:**
+- 소환 영웅 146명 미련 섹션
+- 에픽 섭리 블록 전체 삭제 (147+)
+- L03 보강 LR-001~005 (5대 대륙)
+- 창세 신화·신성 백과 신 중립 감사
+- 소환 백과 감사·정령 도감 5대륙 신규 생성
+- FS 엔진 v1.0 (FSE-00~03)
+
+**진행 중:**
+- 나머지 백과 감사 (01-31 마법, 01-34 연금, 01-35 마공학, 01-36 주술, 01-38~42)
+
+**다음:**
+- FS 엔진 실전 가동 (FSE-02 역설계 → FSE-03 미련 원장 초기화)
+- C1 초고 진입
