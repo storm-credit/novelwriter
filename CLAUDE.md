@@ -67,7 +67,9 @@ TFS Orchestrator (오케스트라, 메인 Claude)
   │     ├── FSE-00 Orchestrator Lock           (오케스트라 행동 규약)
   │     ├── FSE-01 Methodology                 (역설계·빙산·체호프·감각·미러링·인메디아스레스)
   │     ├── FSE-02 Reverse Engineer    [Opus]  (플롯 역산)
-  │     └── FSE-03 Chekhov Tracker     [Sonnet] (미련 추적·발사 감시)
+  │     ├── FSE-03 Chekhov Tracker     [Sonnet] (미련 추적·발사 감시)
+  │     ├── FSE-04 Sensory Anchor      [Sonnet] (감각 앵커 검증·배치)
+  │     └── FSE-05 Mirroring Validator [Sonnet] (에반↔루미에 미러 검증)
   │
   ├── 📚 Lore PM 레이어 (설정집 운영)
   │     ├── L00 Lore Program Manager
@@ -181,7 +183,7 @@ Task 호출 시 항상 포함:
 - L03 보강 LR-001~005 (5대 대륙)
 - 창세 신화·신성 백과 신 중립 감사
 - 소환 백과 감사·정령 도감 5대륙 신규 생성
-- FS 엔진 v1.0 (FSE-00~03)
+- FS 엔진 v1.1 (FSE-00~05)
 
 **진행 중:**
 - 나머지 백과 감사 (01-31 마법, 01-34 연금, 01-35 마공학, 01-36 주술, 01-38~42)

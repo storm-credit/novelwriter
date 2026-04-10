@@ -151,6 +151,8 @@ authority: absolute
 - `FSE_01_methodology.md` — 작문 철학 레퍼런스
 - `FSE_02_reverse_engineer.md` — 플롯 역설계 (Opus)
 - `FSE_03_chekhov_tracker.md` — 미련 추적관 (Sonnet)
+- `FSE_04_sensory_anchor.md` — 감각 앵커링 전문가 (Sonnet)
+- `FSE_05_mirroring_validator.md` — 미러링 검증기 (Sonnet)
 
 ### 5-3. 범용 3군 레이어 (기존)
 - **D01~D05** — 설계군 (세계관·플롯·캐릭터·테마·결말)
